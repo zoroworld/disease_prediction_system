@@ -5,21 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="263b6a53-7f40-4777-9745-48621641d9a0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/ml/model_loader.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/ml/normalize.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/ml/predictor.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/services/cache.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/tests/test_api.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/tests/test_ml.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/tests/test_models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/tests/test_normalizer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ml/ensemble_model.pkl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ml/tfidf_vectorizer.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
