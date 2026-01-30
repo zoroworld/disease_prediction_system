@@ -32,4 +32,5 @@ whitenoise
 # CORS
 django-cors-headers
 
-
+# databse_URL
+dj-database-url==3.1.0
