@@ -30,7 +30,6 @@ DEBUG = os.getenv("DEBUG")
 
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'users',
     'app'
 ]
 
@@ -75,17 +75,48 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if os.getenv("ENV") == "production":
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv("DB_NAME"),
+            'USER': os.getenv("DB_USER"),
+            'PASSWORD': os.getenv("DB_PASSWORD"),
+            'HOST': os.getenv("DB_HOST"),
+            'PORT': '5432',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'disease_db',
+            'USER': 'admin',
+            'PASSWORD': 'admin',
+            'HOST': 'db',   # docker-compose postgres
+            'PORT': '5432',
+        }
+    }
 
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("DB_NAME"),
+        "USER": os.getenv("DB_USER"),
+        "PASSWORD": os.getenv("DB_PASSWORD"),
+        "HOST": os.getenv("DB_HOST"),
+        "PORT": os.getenv("DB_PORT"),
+    }
+
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
@@ -105,7 +136,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
@@ -116,7 +146,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
@@ -129,3 +158,6 @@ CORS_ALLOW_CREDENTIALS = True
 
 # whitenoise
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# use this user model
+AUTH_USER_MODEL = "users.User"
