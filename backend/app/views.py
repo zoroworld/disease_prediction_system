@@ -14,6 +14,7 @@ from .serializers import (
     DiseasePredictionResponseSerializer
 )
 
+from .ml.predictor import predict_disease
 
 def index(request):
     return HttpResponse("Hello World")
@@ -28,15 +29,29 @@ class DiseasePredictionAPIView(APIView):
 
         raw_symptoms = serializer.validated_data["symptoms"]
 
+        if not raw_symptoms:
+            return Response(
+                {"error": "symptoms field is required"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # {
+        #     "symptoms": "fever headache body pain"
+        # }
+
         # 1️⃣ Normalize (LangChain / LLM)
         normalized = "headache fever"  # example
 
 
+
+
         # 2️ML Prediction
-        predictions = [
-            {"disease": "Migraine", "confidence": 0.87},
-            {"disease": "Viral Fever", "confidence": 0.09},
-        ]
+        predictions = predict_disease(raw_symptoms)
+
+        # predictions = [
+        #     {"disease": "Migraine", "confidence": 0.87},
+        #     {"disease": "Viral Fever", "confidence": 0.09},
+        # ]
 
         response_data = {
             "input_symptoms": raw_symptoms,

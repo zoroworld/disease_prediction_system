@@ -1,8 +1,9 @@
 import joblib
 import os
+from django.conf import settings
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MODEL_DIR = os.path.join(settings.BASE_DIR, "models")
 
-model = joblib.load(os.path.join(BASE_DIR, "models/ensemble_model.pkl"))
-vectorizer = joblib.load(os.path.join(BASE_DIR, "models/tfidf_vectorizer.pkl"))
-label_encoder = joblib.load(os.path.join(BASE_DIR, "models/label_encoder.pkl"))
+model = joblib.load(os.path.join(MODEL_DIR, "ensemble_model.pkl"))
+vectorizer = joblib.load(os.path.join(MODEL_DIR, "tfidf_vectorizer.pkl"))
+
