@@ -1,6 +1,8 @@
 services:
   backend:
     build: .
+    env_file:
+      - .env
     ports:
       - "8000:8000"
     depends_on:
@@ -9,6 +11,8 @@ services:
 
   redis:
     image: redis:7
+    env_file:
+      - .env
     container_name: disease_redis
     ports:
       - "6379:6379"

@@ -44,6 +44,8 @@ class DiseasePredictionAPIView(APIView):
         normalized = normalized_output(raw_symptoms)
 
 
+
+
         # 2️ML Prediction
         predictions = predict_disease(raw_symptoms)
 
