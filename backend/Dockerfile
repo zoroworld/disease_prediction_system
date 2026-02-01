@@ -1,28 +1,46 @@
 FROM python:3.10-slim
 
-# Prevent Python buffering
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# Set working directory
 WORKDIR /app
 
-# System dependencies (important for ML)
+# System deps required for torch & transformers
 RUN apt-get update && apt-get install -y \
     build-essential \
+    gcc \
+    g++ \
+    libglib2.0-0 \
+    libgomp1 \
+    libstdc++6 \
+    libsm6 \
+    libxext6 \
+    libxrender1 \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements
+
+# Copy requirements first (for Docker cache)
 COPY requirements.txt .
 
-# Install Python packages INSIDE container
-RUN pip install --no-cache-dir -r requirements.txt
+# IMPORTANT: use python -m pip
+RUN python -m pip install --upgrade pip \
+ && python -m pip install --no-cache-dir -r requirements.txt \
+ && python -m pip check
 
-# Copy project
+# Verify critical installs (fail fast)
+RUN python - <<EOF
+import torch, transformers, langchain, langgraph
+print("torch:", torch.__version__)
+print("transformers:", transformers.__version__)
+print("langchain:", langchain.__version__)
+print("langgraph:", langgraph.__version__)
+EOF
+
+
+# Copy project code
 COPY . .
 
-# Expose Django port
 EXPOSE 8000
 
-# Run server
 CMD ["gunicorn", "backend.wsgi:application", "--bind", "0.0.0.0:8000"]

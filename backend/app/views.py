@@ -15,6 +15,7 @@ from .serializers import (
 )
 
 from .ml.predictor import predict_disease
+from .ml.normalize import normalized_output
 
 def index(request):
     return HttpResponse("Hello World")
@@ -40,9 +41,7 @@ class DiseasePredictionAPIView(APIView):
         # }
 
         # 1️⃣ Normalize (LangChain / LLM)
-        normalized = "headache fever"  # example
-
-
+        normalized = normalized_output(raw_symptoms)
 
 
         # 2️ML Prediction
