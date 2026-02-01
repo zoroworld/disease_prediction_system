@@ -14,8 +14,9 @@ from .serializers import (
     DiseasePredictionResponseSerializer
 )
 
-from .ml.predictor import predict_disease
-from .ml.normalize import normalized_output
+from app.ml.predictor import predict_disease
+from app.ml.normalize import normalized_output
+
 
 def index(request):
     return HttpResponse("Hello World")

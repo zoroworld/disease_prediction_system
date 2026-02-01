@@ -1,78 +1,73 @@
-from typing import TypedDict
-from langgraph.graph import StateGraph, START, END
-from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
 from dotenv import load_dotenv
+from typing import TypedDict
+from langgraph.graph import StateGraph, END
+from langchain_huggingface import HuggingFaceEndpoint, ChatHuggingFace
 import os
 
-# 1️⃣ Load .env immediately
 load_dotenv()
 
-# 2️⃣ Singleton for HF token
-class HfToken:
-    _instance = None
+HF_TOKEN = os.getenv("HUGGINGFACEHUB_API_TOKEN")
 
-    @classmethod
-    def get_token(cls):
-        if cls._instance is None:
-            token = os.getenv("HUGGINGFACEHUB_API_TOKEN")
-            if not token:
-                raise RuntimeError("HUGGINGFACEHUB_API_TOKEN not found in environment")
-            cls._instance = token
-        return cls._instance
+print("HF TOKEN LENGTH:", len(HF_TOKEN))
 
-# 3️⃣ Lazy-loaded LLM singleton
-_llm_instance = None
-_model_instance = None
+if not HF_TOKEN:
+    raise RuntimeError("HUGGINGFACEHUB_API_TOKEN not found")
+
+
+
+_llm = None
+_chat = None
 
 def get_llm():
-    global _llm_instance
-    if _llm_instance is None:
-        _llm_instance = HuggingFaceEndpoint(
-            repo_id="meta-llama/Meta-Llama-3-8B-Instruct",
+    global _llm
+    if _llm is None:
+        _llm = HuggingFaceEndpoint(
+            repo_id="HuggingFaceH4/zephyr-7b-beta",
             task="chat-completion",
+            huggingfacehub_api_token=HF_TOKEN,
             temperature=0.3,
-            max_new_tokens=128,
-            huggingfacehub_api_token=HfToken.get_token(),
+            max_new_tokens=256,
         )
-    return _llm_instance
+    return _llm
 
-def get_model():
-    global _model_instance
-    if _model_instance is None:
-        _model_instance = ChatHuggingFace(llm=get_llm())
-    return _model_instance
+def get_chat():
+    global _chat
+    if _chat is None:
+        _chat = ChatHuggingFace(llm=get_llm())
+    return _chat
 
-# 4️⃣ Define state
+
 class SymptomState(TypedDict, total=False):
     input_text: str
     normalized_symptoms: str
 
-# 5️⃣ Define node
 def symptom_normalizer(state: SymptomState) -> SymptomState:
-    text = state.get("input_text", "")
+    prompt =  f"""
+    You are a medical text normalizer.
 
-    prompt = (
-        "You are a medical text normalization system.\n"
-        "Task: Convert user input into standardized clinical symptom names.\n"
-        "Rules:\n"
-        "- Fix spelling mistakes\n"
-        "- Use standard medical terminology\n"
-        "- Output ONLY a comma-separated list\n"
-        "- Do NOT add explanations or extra text\n\n"
-        f"Input: {text}\n"
-        "Output:"
-    )
+    Task:
+    Convert the user input into standardized medical symptoms.
 
-    model = get_model()
-    response = model.invoke(prompt)
-    result = response.content.strip().lower()
+    STRICT OUTPUT RULES:
+    - Output ONLY a comma-separated list of symptom names
+    - Do NOT include explanations, descriptions, or clarifications
+    - Do NOT include parentheses (), brackets [], or extra words
+    - Do NOT expand or interpret symptoms
+    - Do NOT add examples or alternatives
+    - If a symptom is ambiguous, choose the most common medical term
+    - Output must contain ONLY symptom names and commas
 
-    # safety cleanup
-    result = result.replace("standardized symptoms:", "").strip()
+    User input:
+    {state['input_text']}
 
-    return {"normalized_symptoms": result}
+    Standardized symptoms:
+    """
+    response =  get_chat().invoke(prompt)
 
-# 6️⃣ Build graph
+    return {
+        "normalized_symptoms": response.content.strip().lower()
+    }
+
 graph = StateGraph(SymptomState)
 graph.add_node("normalize", symptom_normalizer)
 graph.set_entry_point("normalize")
@@ -80,11 +75,9 @@ graph.add_edge("normalize", END)
 
 app = graph.compile()
 
-# 7️⃣ Helper function
-def normalized_output(input_text):
-    output = app.invoke({"input_text": input_text})
-    return output['normalized_symptoms']
+def normalized_output(text: str) -> str:
+    return app.invoke({"input_text": text})["normalized_symptoms"]
 
-# Example
-# data = normalized_output("I have feaver and head pain")
+
+# data = normalized_output("fever headache body pain")
 # print(data)

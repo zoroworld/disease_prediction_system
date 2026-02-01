@@ -26,7 +26,8 @@ COPY requirements.txt .
 # IMPORTANT: use python -m pip
 RUN python -m pip install --upgrade pip \
  && python -m pip install --no-cache-dir -r requirements.txt \
- && python -m pip check
+ && python -m pip check \
+
 
 # Verify critical installs (fail fast)
 RUN python - <<EOF

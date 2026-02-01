@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+from huggingface_hub import login
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -162,3 +163,23 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # use this user model
 AUTH_USER_MODEL = "users.User"
+
+# hugging-hub login
+token = os.getenv("HUGGINGFACEHUB_API_TOKEN")
+
+# # Retrieve the token
+# token = os.getenv("HUGGINGFACEHUB_API_TOKEN")
+#
+# # Strict sanitization to prevent ValueError
+# if token and isinstance(token, str) and token.strip().lower() != "none":
+#     # .strip() removes \n, \r, and spaces
+#     # .replace removes accidental quotes that might be in the .env file
+#     clean_token = token.strip().replace('"', '').replace("'", "")
+#
+#     try:
+#         login(token=clean_token, add_to_git_credential=True)
+#         print("Successfully authenticated with Hugging Face.")
+#     except ValueError as e:
+#         print(f"Hugging Face login rejected the token: {e}")
+# else:
+#     print("Hugging Face token is missing or invalid in environment variables.")
