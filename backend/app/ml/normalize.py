@@ -6,7 +6,7 @@ import os
 
 load_dotenv()
 
-HF_TOKEN = os.getenv("HUGGINGFACEHUB_API_TOKEN")
+HF_TOKEN = os.getenv("HUGGINGFACEHUB_API_TOKENN")
 
 print("HF TOKEN LENGTH:", len(HF_TOKEN))
 
