@@ -1,18 +1,11 @@
-from dotenv import load_dotenv
 from typing import TypedDict
+
+from dotenv import load_dotenv
 from langgraph.graph import StateGraph, END
-from langchain_huggingface import HuggingFaceEndpoint, ChatHuggingFace
+from langchain_google_genai import ChatGoogleGenerativeAI
 import os
 
 load_dotenv()
-
-HF_TOKEN = os.getenv("HUGGINGFACEHUB_API_TOKEN")
-
-print("HF TOKEN LENGTH:", len(HF_TOKEN))
-
-if not HF_TOKEN:
-    raise RuntimeError("HUGGINGFACEHUB_API_TOKEN not found")
-
 
 
 _llm = None
@@ -21,20 +14,13 @@ _chat = None
 def get_llm():
     global _llm
     if _llm is None:
-        _llm = HuggingFaceEndpoint(
-            repo_id="HuggingFaceH4/zephyr-7b-beta",
-            task="chat-completion",
-            huggingfacehub_api_token=HF_TOKEN,
-            temperature=0.3,
-            max_new_tokens=256,
-        )
+        _llm =ChatGoogleGenerativeAI(
+                    model="gemini-2.5-flash",
+                    google_api_key=os.getenv("GEMINI_API_KEY")
+                )
     return _llm
 
-def get_chat():
-    global _chat
-    if _chat is None:
-        _chat = ChatHuggingFace(llm=get_llm())
-    return _chat
+
 
 
 class SymptomState(TypedDict, total=False):
@@ -62,7 +48,7 @@ def symptom_normalizer(state: SymptomState) -> SymptomState:
 
     Standardized symptoms:
     """
-    response =  get_chat().invoke(prompt)
+    response =  get_llm().invoke(prompt)
 
     return {
         "normalized_symptoms": response.content.strip().lower()

@@ -24,23 +24,27 @@ def index(request):
 
 
 class DiseasePredictionAPIView(APIView):
-
     def post(self, request):
         serializer = DiseasePredictionRequestSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        raw_symptoms = serializer.validated_data["symptoms"]
-
+        raw_symptoms = serializer.validated_data.get("symptoms")
         if not raw_symptoms:
             return Response(
                 {"error": "symptoms field is required"},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        # {
-        #     "symptoms": "fever headache body pain"
-        # }
+        # 1️⃣ Normalize symptoms using LLM
+        try:
+            normalized = normalized_output(raw_symptoms)
+        except Exception as e:
+            return Response(
+                {"error": f"Symptom normalization failed: {str(e)}"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
+<<<<<<< HEAD
         # 1️⃣ Normalize (LangChain / LLM)
 <<<<<<< HEAD
         normalized = normalized_output(raw_symptoms)
@@ -59,6 +63,11 @@ class DiseasePredictionAPIView(APIView):
         #     {"disease": "Migraine", "confidence": 0.87},
         #     {"disease": "Viral Fever", "confidence": 0.09},
         # ]
+=======
+        # {  "symptoms": "fever headache body pain" }
+        # 2️⃣ ML Prediction
+        predictions = predict_disease(normalized)
+>>>>>>> 74614b5 (changes in llm)
 
         response_data = {
             "input_symptoms": raw_symptoms,
