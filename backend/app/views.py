@@ -15,7 +15,7 @@ from .serializers import (
 )
 
 from .ml.predictor import predict_disease
-from .ml.normalize import normalize_symptoms
+from .ml.normalize import normalized_output
 
 
 def index(request):
@@ -44,30 +44,11 @@ class DiseasePredictionAPIView(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
-<<<<<<< HEAD
-        # 1️⃣ Normalize (LangChain / LLM)
-<<<<<<< HEAD
-        normalized = normalized_output(raw_symptoms)
 
-
-=======
-        # normalized = "headache fever"
-        normalized = normalize_symptoms(raw_symptoms)
->>>>>>> a46210f (disease prediction api update)
-
-
-        # 2️ML Prediction
-        predictions = predict_disease(raw_symptoms)
-
-        # predictions = [
-        #     {"disease": "Migraine", "confidence": 0.87},
-        #     {"disease": "Viral Fever", "confidence": 0.09},
-        # ]
-=======
         # {  "symptoms": "fever headache body pain" }
         # 2️⃣ ML Prediction
+
         predictions = predict_disease(normalized)
->>>>>>> 74614b5 (changes in llm)
 
         response_data = {
             "input_symptoms": raw_symptoms,
