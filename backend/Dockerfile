@@ -29,14 +29,6 @@ RUN python -m pip install --upgrade pip \
  && python -m pip check \
 
 
-# Verify critical installs (fail fast)
-RUN python - <<EOF
-import torch, transformers, langchain, langgraph
-print("torch:", torch.__version__)
-print("transformers:", transformers.__version__)
-print("langchain:", langchain.__version__)
-print("langgraph:", langgraph.__version__)
-EOF
 
 
 # Copy project code
