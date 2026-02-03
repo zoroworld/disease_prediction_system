@@ -155,7 +155,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 # CORS FOR OUTER
-CORS_ALLOWED_ORIGINS = []
+CORS_ALLOWED_ORIGINS = ['disease-prediction-system-j8cl.onrender.com']
 CORS_ALLOW_CREDENTIALS = True
 
 # whitenoise
