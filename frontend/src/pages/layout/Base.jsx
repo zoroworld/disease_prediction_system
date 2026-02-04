@@ -3,6 +3,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Sidebar from "./Sidebar";
 import { useRef } from "react";
+import { ChatProvider } from "../../context/ChatContext";
 
 function Base({ children }) {
   const mainRef = useRef(null);
@@ -17,10 +18,12 @@ function Base({ children }) {
               </div>
               <div className="col-md-10">
                 <Header mainRef={mainRef} />
-                <div class="chat-content">
-                  {children}
-                  <Footer />
-                </div>
+                <ChatProvider>
+                  <div class="chat-content">
+                    {children}
+                    <Footer />
+                  </div>
+                </ChatProvider>
               </div>
             </div>
           </div>
