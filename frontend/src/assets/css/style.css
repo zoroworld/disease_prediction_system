@@ -19,8 +19,8 @@
   --dark-border: #ffffff36;
 }
 
-#root{
-    height: 100vh;
+#root {
+  height: 100vh;
 }
 
 body {
@@ -218,10 +218,6 @@ main {
   z-index: 1;
 }
 
-
-
-
-
 /* -------------------------------------for chat style------------------------------------------- */
 
 /* DARK MODE */
@@ -337,7 +333,7 @@ main.dark-mode .chat-body {
 }
 
 /* HUMAN */
-.human .content {
+.user .content {
   background: var(--accent);
   color: #000;
 }
@@ -409,13 +405,12 @@ main.dark-mode .form-control::placeholder {
 /* chat content */
 .chat-content {
   display: flex;
-  justify-content: space-between;
   flex-direction: column;
   height: 100%;
   width: 100%;
   margin: 0 auto;
   max-width: 80%;
-  max-height: 92%;
+  max-height: 90vh;
 }
 
 /* SEND BUTTON */
@@ -480,12 +475,170 @@ main.dark-mode ::-webkit-scrollbar-thumb {
   }
 }
 
+/* ===============================
+   MODAL BACKDROP
+================================ */
+.modal-backdrop-custom {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
 
+  animation: fadeIn 0.35s ease;
+}
 
+/* ===============================
+   MODAL BOX
+================================ */
+.modal-box {
+  width: 380px;
+  padding: 35px 30px;
+  border-radius: 18px;
 
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.9),
+    rgba(245, 247, 250, 0.85)
+  );
 
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
 
+  text-align: center;
+  animation: modalPop 0.4s ease;
+}
 
+/* ===============================
+   MODAL TITLE
+================================ */
+.modal-box h5 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 12px;
+}
+
+/* ===============================
+   MODAL TEXT
+================================ */
+.modal-box p {
+  font-size: 15px;
+  color: #4b5563;
+  margin-bottom: 28px;
+  line-height: 1.5;
+}
+
+/* ===============================
+   BUTTON
+================================ */
+.modal-box .btn-success {
+  background: linear-gradient(135deg, #19c37d, #10b981);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 15px;
+
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
+}
+
+/* Hover */
+.modal-box .btn-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(16, 185, 129, 0.45);
+}
+
+/* Click */
+.modal-box .btn-success:active {
+  transform: scale(0.97);
+}
+
+/* ===============================
+   ANIMATIONS
+================================ */
+
+@keyframes modalPop {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.chat-search {
+  margin: 15px;
+}
+
+.search-results {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-top: 10px;
+}
+
+.search-results .message.ai {
+  display: flex;
+  align-items: center;
+}
+
+.chat-initil-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+}
+
+.chat-initil-card {
+  background: #00000005;
+  padding: 40px 30px;
+  border-radius: 20px;
+  /* box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2); */
+  text-align: center;
+  max-width: 500px;
+  animation: fadeIn 0.6s ease;
+}
+
+.docter-bot-icon {
+  font-size: 80px;
+  color: #19c37d;
+  margin-bottom: 25px;
+  animation: bounce 1.5s infinite;
+}
+
+.chat-initil-card .description p {
+  font-size: 1.1rem;
+  color: #ffffffa1;
+  line-height: 1.6;
+
+}
+
+/* Optional animations */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
 
 
 

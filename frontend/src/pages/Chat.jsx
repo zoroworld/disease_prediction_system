@@ -1,36 +1,99 @@
-import React from "react";
+import React, { useContext, useEffect, useRef } from "react";
+import { ChatContext } from "../context/ChatContext";
+import Typewriter from "typewriter-effect";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRobot, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faRobot } from "@fortawesome/free-solid-svg-icons";
 
 const Chat = () => {
+  const { messages, hasSearched } = useContext(ChatContext);
+  const bottomRef = useRef(null);
+
+  //  Store IDs of AI messages that have been typed
+  const typedMessagesRef = useRef(new Set());
+
+  // Auto scroll on new messages
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages.length]);
+
+  // if (!messages || messages.length === 0) {
+  //   return (
+  //     <div className="chat-body d-flex align-items-center justify-content-center">
+  //       <p className="text-white">
+  //         No conversation present. Create a new prediction.
+  //       </p>
+  //     </div>
+  //   );
+  // }
+
   return (
     <>
-      <div className="chat-body">
-        <div className="message ai">
-          <div className="icon">
-            <FontAwesomeIcon icon={faRobot} className="ms-2" />
+      {(!hasSearched || !messages || messages.length === 0)? (
+        <div className="chat-initil-body">
+          <div className="chat-initil-card">
+            <div className="docter-bot-icon">
+              <FontAwesomeIcon icon={faRobot} />
+            </div>
+            <div className="description">
+              <p>
+                Welcome! Enter your symptoms in the search bar below and let me
+                help you with a prediction.
+              </p>
+            </div>
           </div>
-          <div className="content">Hello 👋 How can I help you today?</div>
         </div>
+      ) : (
+        <div className="chat-body">
+          {messages.map((item) => {
+            const text =
+              typeof item.message === "string"
+                ? item.message
+                : item.message?.msg;
 
-        <div className="message human">
-          <div className="icon">
-            <FontAwesomeIcon icon={faUser} className="ms-2" />
-          </div>
-          <div className="content">
-            Build a ChatGPT UI with sidebar and dark mode.
-          </div>
-        </div>
+            const isAI = item.role === "ai";
 
-        <div className="message ai">
-          <div className="icon">
-            <FontAwesomeIcon icon={faRobot} className="ms-2" />
-          </div>
-          <div className="content">
-            You're looking at a complete template already 🚀
-          </div>
+            const hasTyped = typedMessagesRef.current.has(item.id);
+
+            // If AI message hasn't been typed yet → use Typewriter
+            const showTypewriter = isAI && !hasTyped;
+
+            return (
+              <div key={item.id} className={`message ${item.role}`}>
+                <div className="icon">{item.icon}</div>
+
+                <div className="content">
+                  {showTypewriter ? (
+                    <Typewriter
+                      options={{
+                        cursor: "|",
+                        delay: 35,
+                        deleteSpeed: Infinity, // never delete
+                      }}
+                      onInit={(typewriter) => {
+                        typewriter
+                          .typeString(text)
+                          .callFunction(() => {
+                            // mark message as typed
+                            typedMessagesRef.current.add(item.id);
+                            // scroll to bottom
+                            bottomRef.current?.scrollIntoView({
+                              behavior: "smooth",
+                            });
+                          })
+                          .start();
+                      }}
+                    />
+                  ) : (
+                    text
+                  )}
+                </div>
+              </div>
+            );
+          })}
+
+          <div ref={bottomRef} />
         </div>
-      </div>
+      )}
     </>
   );
 };

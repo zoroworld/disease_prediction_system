@@ -9,7 +9,7 @@ function Header({mainRef}) {
   return (
     <>
       <div className="chat-header d-flex justify-content-between align-items-center">
-        <strong>ChatGPT Clone</strong>
+        <strong>MARKED</strong>
 
         <div className="d-flex align-items-center gap-3">
           <button
