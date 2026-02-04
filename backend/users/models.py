@@ -1,8 +1,10 @@
+
 from django.db import models
 
 # Create your models here.
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+
 
 
 class User(AbstractUser):
@@ -27,12 +29,16 @@ class PatientInput(models.Model):
     raw_symptoms = models.TextField()
     normalized_symptoms = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    report = models.JSONField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 
     def __str__(self):
         return self.normalized_symptoms
+
+
+
 
 
 class PatientResult(models.Model):
@@ -44,5 +50,9 @@ class PatientResult(models.Model):
 
     def __str__(self):
         return self.disease_name
+
+    @property
+    def confidence_percentage(self):
+        return round(self.confidence_score * 100, 2)
 
 

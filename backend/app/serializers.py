@@ -19,11 +19,13 @@ class DiseasePredictionRequestSerializer(serializers.Serializer):
         help_text="Enter symptoms in natural language"
     )
 
+class PredictionSerializer(serializers.Serializer):
+    disease = serializers.CharField()
+    confidence = serializers.FloatField()
+
 class DiseasePredictionResponseSerializer(serializers.Serializer):
     input_symptoms = serializers.CharField()
     normalized_symptoms = serializers.CharField()
-    predictions = serializers.ListField(
-        child=serializers.DictField()
-    )
-
+    predictions = PredictionSerializer(many=True)
+    report = serializers.JSONField(required=False)
 

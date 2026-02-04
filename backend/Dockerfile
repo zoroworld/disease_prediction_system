@@ -5,44 +5,23 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-# System deps required for torch & transformers
+# System dependencies
 RUN apt-get update && apt-get install -y \
-    build-essential \
-    gcc \
-    g++ \
-    libglib2.0-0 \
-    libgomp1 \
-    libstdc++6 \
-    libsm6 \
-    libxext6 \
-    libxrender1 \
-    curl \
+    build-essential gcc g++ libglib2.0-0 libgomp1 libstdc++6 libsm6 libxext6 libxrender1 curl \
     && rm -rf /var/lib/apt/lists/*
 
-
-
-# Copy requirements first (for Docker cache)
+# Copy requirements and install
 COPY requirements.txt .
-
-# IMPORTANT: use python -m pip
 RUN python -m pip install --upgrade pip \
- && python -m pip install --no-cache-dir -r requirements.txt \
- && python -m pip check \
-
-
-# Verify critical installs (fail fast)
-RUN python - <<EOF
-import torch, transformers, langchain, langgraph
-print("torch:", torch.__version__)
-print("transformers:", transformers.__version__)
-print("langchain:", langchain.__version__)
-print("langgraph:", langgraph.__version__)
-EOF
-
+ && python -m pip install --no-cache-dir -r requirements.txt
 
 # Copy project code
-COPY . .
+COPY . /app
+
+# Ensure Python can find the inner backend package
+ENV PYTHONPATH=/app
 
 EXPOSE 8000
 
+# Default: Gunicorn for production
 CMD ["gunicorn", "backend.wsgi:application", "--bind", "0.0.0.0:8000"]
