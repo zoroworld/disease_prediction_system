@@ -37,6 +37,7 @@ function Footer() {
           <textarea
             className="form-control"
             rows="1"
+            name="symptoms"
             value={input}
             disabled={isDisabled || !activeConversationId}
             placeholder={

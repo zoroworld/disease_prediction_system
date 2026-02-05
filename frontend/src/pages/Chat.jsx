@@ -1,5 +1,7 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { ChatContext } from "../context/ChatContext";
+
+
 import Typewriter from "typewriter-effect";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRobot } from "@fortawesome/free-solid-svg-icons";
@@ -7,6 +9,7 @@ import { faRobot } from "@fortawesome/free-solid-svg-icons";
 const Chat = () => {
   const { messages, hasSearched } = useContext(ChatContext);
   const bottomRef = useRef(null);
+
 
   //  Store IDs of AI messages that have been typed
   const typedMessagesRef = useRef(new Set());
@@ -16,19 +19,11 @@ const Chat = () => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages.length]);
 
-  // if (!messages || messages.length === 0) {
-  //   return (
-  //     <div className="chat-body d-flex align-items-center justify-content-center">
-  //       <p className="text-white">
-  //         No conversation present. Create a new prediction.
-  //       </p>
-  //     </div>
-  //   );
-  // }
+
 
   return (
     <>
-      {(!hasSearched || !messages || messages.length === 0)? (
+      {(!hasSearched || !messages || messages.length === 0) ? (
         <div className="chat-initil-body">
           <div className="chat-initil-card">
             <div className="docter-bot-icon">

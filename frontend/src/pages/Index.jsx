@@ -1,5 +1,11 @@
 import React from "react";
 import ButtonLink from "../component/ButtonLink";
+import symptom1 from '../assets/images/symptom_1.png';
+import symptom2 from '../assets/images/symptom_2.png';
+import symptom3 from '../assets/images/symptom_3.png';
+import symptom4 from '../assets/images/symptom_4.png';
+import symptom5 from '../assets/images/symptom_5.png';
+
 
 function Index() {
   return (
@@ -19,34 +25,46 @@ function Index() {
             <div className="orbit-container">
               <div className="symptom">
                 <img
-                  src="https://img.icons8.com/fluency/96/fever.png"
+                  src={symptom1}
                   alt="Fever"
+                  className="rounded-circle img-fluid"
+                  style={{ width: '80px', height: '80px', objectFit: 'cover' }}
                 />
+
               </div>
               <div className="symptom">
                 <img
-                  src="https://img.icons8.com/fluency/96/headache.png"
-                  alt="Headache"
-                />
-              </div>
-              <div className="symptom">
-                <img
-                  src="https://img.icons8.com/fluency/96/cough.png"
-                  alt="Cough"
-                />
-              </div>
-              <div className="symptom">
-                <img
-                  src="https://img.icons8.com/fluency/96/nausea.png"
-                  alt="Nausea"
-                />
-              </div>
-              <div className="symptom">
-                <img
-                  src="https://img.icons8.com/fluency/96/fatigue.png"
+                  src={symptom2}
                   alt="Fatigue"
+                  className="rounded-circle img-fluid"
+                  style={{ width: '80px', height: '80px', objectFit: 'cover' }}
                 />
               </div>
+              <div className="symptom">
+                <img
+                  src={symptom3}
+                  alt="Nausea"
+                  className="rounded-circle img-fluid"
+                  style={{ width: '80px', height: '80px', objectFit: 'cover' }}
+                />
+              </div>
+              <div className="symptom">
+                <img
+                  src={symptom4}
+                  alt="Cough"
+                  className="rounded-circle img-fluid"
+                  style={{ width: '80px', height: '80px', objectFit: 'cover' }}
+                />
+              </div>
+              <div className="symptom">
+                <img
+                  src={symptom5}
+                  alt="Headache"
+                  className="rounded-circle img-fluid"
+                  style={{ width: '80px', height: '80px', objectFit: 'cover' }}
+                />
+              </div>
+              
             </div>
 
             <div className="landing-image">

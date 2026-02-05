@@ -4,7 +4,7 @@ import { faMoon, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../../context/AuthContext";
 
 
-function Header({ mainRef }) {
+function Header({ mainRef, userData }) {
   const { logout } = useAuth();
 
   function handletoggleTheme() {
@@ -32,6 +32,7 @@ function Header({ mainRef }) {
               className="btn btn-sm btn-outline-secondary dropdown-toggle"
               data-bs-toggle="dropdown"
             >
+              {userData?.data?.username}
               <FontAwesomeIcon icon={faUser} className="ms-2" />
             </button>
             <ul className="dropdown-menu dropdown-menu-end">

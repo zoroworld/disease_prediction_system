@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRobot, faUser } from "@fortawesome/free-solid-svg-icons";
-
+import { sendMessage as sendMessageApi } from "../api/chatApi";
 export const ChatContext = createContext();
 
 export const ChatProvider = ({ children }) => {
@@ -110,7 +110,7 @@ export const ChatProvider = ({ children }) => {
   // =============================
   // SEND MESSAGE
   // =============================
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (!input.trim()) return;
     if (chatStatus === "completed") return;
     if (!activeConversationId) return;
@@ -132,20 +132,54 @@ export const ChatProvider = ({ children }) => {
     updateConversationStatus("predicting");
     setHasSearched(true);
 
-    setTimeout(() => {
+
+    try {
+      // 🔥 CALL BACKEND
+      // const data = await sendMessageApi(input);
+      const data = {
+        "input_symptoms": "i have feaver and vomiting",
+        "normalized_symptoms": "fever, vomiting",
+        "predictions": [
+          {
+            "disease": "typhoid",
+            "confidence": 0.15
+          },
+          {
+            "disease": "dengue",
+            "confidence": 0.14
+          }
+        ],
+        "report": "```json\n{\n    \"overview\": \"The patient reports experiencing fever and vomiting.\",\n    \"description\": \"Fever, an elevated body temperature, is a common non-specific symptom often indicating an underlying infection or inflammatory process. Vomiting, the forceful expulsion of stomach contents, can be triggered by various factors including gastrointestinal infections, food poisoning, or systemic illnesses.\",\n    \"predictions\": [\n        {\n            \"disease\": \"typhoid\",\n            \"confidence\": 0.15,\n            \"recommendation\": \"Consult a doctor for diagnostic tests such as blood culture or Widal test, and appropriate antibiotic treatment if confirmed.\"\n        },\n        {\n            \"disease\": \"dengue\",\n            \"confidence\": 0.14,\n            \"recommendation\": \"Seek medical attention for diagnosis (e.g., NS1 antigen test, PCR) and supportive care, including fluid management and monitoring for warning signs.\"\n        }\n    ],\n    \"recommended_steps\": \"Given the presence of fever and vomiting, it is highly recommended to consult a healthcare professional promptly for a thorough evaluation, accurate diagnosis, and appropriate treatment plan. Stay hydrated by drinking plenty of fluids and avoid self-medication until a doctor's advice is received.\"\n}\n```"
+      }
+      console.log(data)
+
+      // AI MESSAGE
       const aiMessage = {
         id: id + 1,
         role: "ai",
         icon: <FontAwesomeIcon icon={faRobot} />,
-        message: { msg: "This is Docter AI response 🤖" },
+        message: {
+          msg: data.result || "No prediction found",
+        },
       };
 
       updateMessages(aiMessage);
-
-      // setChatStatus("completed");
       updateConversationStatus("completed");
       setShowPredictionModal(true);
-    }, 1500);
+
+    } catch (error) {
+      console.error("Prediction failed:", error);
+
+      const errorMessage = {
+        id: id + 1,
+        role: "ai",
+        icon: <FontAwesomeIcon icon={faRobot} />,
+        message: { msg: "Something went wrong 😢" },
+      };
+
+      updateMessages(errorMessage);
+      updateConversationStatus("completed");
+    }
   };
 
   return (

@@ -1,61 +1,100 @@
-// base.js
 import axios from "axios";
 
-const VITE_API_KEY = import.meta.env.VITE_API_KEY;
+const API_URL = import.meta.env.VITE_API_KEY;
 
-// in-memory access token
 let accessToken = null;
+let isRefreshing = false;
+let failedQueue = [];
 
-// Create Axios instance
+const processQueue = (error, token = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) prom.reject(error);
+    else prom.resolve(token);
+  });
+  failedQueue = [];
+};
+
 const base = axios.create({
-  baseURL: VITE_API_KEY,
+  baseURL: API_URL,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-// Request interceptor: attach access token to all requests
+// Attach access token
 base.interceptors.request.use((config) => {
   if (accessToken) {
-    config.headers["Authorization"] = `Bearer ${accessToken}`;
+    config.headers.Authorization = `Bearer ${accessToken}`;
   }
   return config;
 });
 
-// Response interceptor: handle 401 and refresh access token automatically
+// Handle 401 + refresh token
 base.interceptors.response.use(
   (response) => response,
   async (error) => {
-    if (error.response && error.response.status === 401) {
-      // Try refreshing the access token
-      const refreshToken = localStorage.getItem("refresh");
-      if (refreshToken) {
-        try {
-          const res = await axios.post(`${VITE_API_KEY}/token/refresh/`, {
-            refresh: refreshToken,
-          });
-          accessToken = res.data.access;
+    const originalRequest = error.config;
 
-          // Retry the original request with new access token
-          error.config.headers["Authorization"] = `Bearer ${accessToken}`;
-          return base(error.config);
-        } catch (err) {
-          // Refresh failed → redirect to login
-          window.location.href = "/login";
-          return Promise.reject(err);
+    // Prevent infinite loop
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry
+    ) {
+      originalRequest._retry = true;
+
+      // If refresh already in progress, queue request
+      if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+          failedQueue.push({ resolve, reject });
+        }).then((token) => {
+          originalRequest.headers.Authorization = `Bearer ${token}`;
+          return base(originalRequest);
+        });
+      }
+
+      isRefreshing = true;
+
+      try {
+        const refresh = localStorage.getItem("refresh");
+        if (!refresh) throw new Error("No refresh token");
+
+        const res = await axios.post(`${API_URL}/token/refresh/`, {
+          refresh,
+        });
+        
+        accessToken = res.data.access;
+        
+        // IMPORTANT when ROTATE_REFRESH_TOKENS = True
+        if (res.data.refresh) {
+          localStorage.setItem("refresh", res.data.refresh);
         }
-      } else {
-        // No refresh token → redirect to login
-        window.location.href = "/login";
+        
+        processQueue(null, accessToken);
+
+        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+        return base(originalRequest);
+      } catch (err) {
+        processQueue(err, null);
+        logout();
+        return Promise.reject(err);
+      } finally {
+        isRefreshing = false;
       }
     }
+
     return Promise.reject(error);
   }
 );
 
-// Helper to set access token after login
+// Helpers
 export const setAccessToken = (token) => {
   accessToken = token;
+};
+
+export const logout = () => {
+  accessToken = null;
+  localStorage.removeItem("refresh");
+  window.location.href = "/login";
 };
 
 export default base;

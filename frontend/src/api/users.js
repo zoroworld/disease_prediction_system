@@ -5,6 +5,11 @@ export const getUsers = () => {
     return base.get("/users/")
 }
 
+export const getUserById = async (id) => {
+    const res = await base.get(`/user/${id}/`);
+    return res.data;
+};
+
 
 export async function signup({ username, email, password }) {
 
@@ -38,8 +43,8 @@ export async function login(userData) {
     // Set tokens
     setAccessToken(res.data.access);              // in-memory
     localStorage.setItem("refresh", res.data.refresh); // long-lived
-
-    return res.data;
+    const data = res.data
+    return { success: true, data };
 }
 
 
