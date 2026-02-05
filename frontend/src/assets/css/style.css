@@ -40,7 +40,11 @@ body {
   background-position: bottom center;
   background-blend-mode: difference;
   height: 100vh;
+  animation: bgFloat 18s ease-in-out infinite;
 }
+
+
+
 main {
   background: var(--light-bg);
   background-repeat: no-repeat;
@@ -48,6 +52,7 @@ main {
   background-position: bottom center;
   background-blend-mode: normal;
   color: #111;
+  animation: bgFloat 18s ease-in-out infinite;
 }
 
 .landing-container {
@@ -107,9 +112,11 @@ main {
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
@@ -160,6 +167,7 @@ main {
   0% {
     transform: translate(-50%, -50%) rotate(0deg);
   }
+
   100% {
     transform: translate(-50%, -50%) rotate(360deg);
   }
@@ -191,15 +199,19 @@ main {
 .symptom:nth-child(1) {
   transform: rotate(0deg) translateX(140px) rotate(0deg);
 }
+
 .symptom:nth-child(2) {
   transform: rotate(72deg) translateX(140px) rotate(-72deg);
 }
+
 .symptom:nth-child(3) {
   transform: rotate(144deg) translateX(140px) rotate(-144deg);
 }
+
 .symptom:nth-child(4) {
   transform: rotate(216deg) translateX(140px) rotate(-216deg);
 }
+
 .symptom:nth-child(5) {
   transform: rotate(288deg) translateX(140px) rotate(-288deg);
 }
@@ -228,6 +240,7 @@ main.dark-mode {
   background-position: bottom center;
   background-blend-mode: difference;
   color: #fff;
+  animation: bgFloat 18s ease-in-out infinite;
 }
 
 /* LAYOUT */
@@ -397,11 +410,13 @@ main.dark-mode .form-control::placeholder {
   background-color: #eff1f3c2;
   border-color: #caced4;
 }
+
 .dark-mode .form-control:focus {
   color: #c1c7cc;
   background-color: #060a0dc2;
   border-color: #86b7fe;
 }
+
 /* chat content */
 .chat-content {
   display: flex;
@@ -447,11 +462,9 @@ main.dark-mode ::-webkit-scrollbar-thumb {
   justify-content: center;
   align-items: center;
 
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.95),
-    rgba(10, 36, 76, 0.85)
-  );
+  background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.95),
+      rgba(10, 36, 76, 0.85));
 
   color: #fff;
   font-size: 0.9rem;
@@ -499,11 +512,9 @@ main.dark-mode ::-webkit-scrollbar-thumb {
   padding: 35px 30px;
   border-radius: 18px;
 
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.9),
-    rgba(245, 247, 250, 0.85)
-  );
+  background: linear-gradient(145deg,
+      rgba(255, 255, 255, 0.9),
+      rgba(245, 247, 250, 0.85));
 
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25),
     inset 0 1px 0 rgba(255, 255, 255, 0.5);
@@ -567,6 +578,7 @@ main.dark-mode ::-webkit-scrollbar-thumb {
     opacity: 0;
     transform: translateY(40px) scale(0.9);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -577,6 +589,7 @@ main.dark-mode ::-webkit-scrollbar-thumb {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -631,13 +644,27 @@ main.dark-mode ::-webkit-scrollbar-thumb {
 
 /* Optional animations */
 @keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 
@@ -648,11 +675,27 @@ main.dark-mode ::-webkit-scrollbar-thumb {
     flex-direction: column;
     align-items: center;
   }
+
   .landing-orbit {
     margin-top: 30px;
   }
+
   .landing-text {
     align-items: center;
     text-align: center;
+  }
+}
+
+@keyframes bgFloat {
+  0% {
+    background-position: bottom center;
+  }
+
+  50% {
+    background-position: center center;
+  }
+
+  100% {
+    background-position: bottom center;
   }
 }

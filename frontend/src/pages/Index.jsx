@@ -13,6 +13,7 @@ function Index() {
               possible diseases.
             </div>
             <ButtonLink data={{ name: "Get Started", link: "/chat" }} />
+            {/* <ButtonLink data={{ name: "Get Started", link: "/login" }} /> */}
           </div>
 
           <div className="landing-orbit">
