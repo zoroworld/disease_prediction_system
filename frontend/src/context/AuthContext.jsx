@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import { signup as apiSignup, login as apiLogin } from "../api/users";
 
 const AuthContext = createContext(null);
 
@@ -7,37 +8,50 @@ export const AuthProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("user")) || null
   );
 
-  const login = (userData) => {
-    setUser(userData);
-    localStorage.setItem("user", JSON.stringify(userData));
+  // Save user after login
+  const login = async (userData) => {
+    try {
+      
+      // Call backend login API
+      const res = await apiLogin(userData);
+      if (res.success) {
+        // Auto-login after signup
+        setUser(res.user);
+        localStorage.setItem("user", JSON.stringify(res.user));
+      }
+
+      return { success: true, user: userData };
+    } catch (error) {
+      if (error.response) {
+        return { success: false, errors: error.response.data.detail || error.response.data };
+      }
+      return { success: false, errors: "Network error" };
+    }
   };
 
+  // Signup function
   const signup = async ({ username, email, password, confirmPassword }) => {
     if (password !== confirmPassword) {
-      throw new Error("Passwords do not match");
+      return { success: false, errors: { password: "Passwords do not match" } };
     }
 
-    // 🔗 API CALL (example)
-    const res = await fetch("http://localhost:8000/api/signup/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, email, password }),
-    });
+    // Call backend API
+    const res = await apiSignup({ username, email, password });
 
-    const data = await res.json();
-
-    if (!res.ok) {
-      throw new Error(data.message || "Signup failed");
+    if (res.success) {
+      // Auto-login after signup
+      setUser(res.user);
+      localStorage.setItem("user", JSON.stringify(res.user));
     }
 
-    // Auto-login after signup
-    setUser(data.user);
-    localStorage.setItem("user", JSON.stringify(data.user));
+    return res; // return success or error to the component
   };
 
+  // Logout function
   const logout = () => {
     setUser(null);
     localStorage.removeItem("user");
+    localStorage.removeItem("refresh");
   };
 
   return (
@@ -47,4 +61,5 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
+// Custom hook for easy access
 export const useAuth = () => useContext(AuthContext);

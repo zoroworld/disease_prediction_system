@@ -25,16 +25,11 @@ function App() {
         <Route
           path="/chat"
           element={
-            // <ProtectedRoute>
-            //   <Base>
-            //     <Chat />
-            //   </Base>
-            // </ProtectedRoute>
-
-            <Base>
-              <Chat />
-            </Base>
-
+            <ProtectedRoute>
+              <Base>
+                <Chat />
+              </Base>
+            </ProtectedRoute>
           }
         />
         <Route path="/contact" element={<Contact />} />

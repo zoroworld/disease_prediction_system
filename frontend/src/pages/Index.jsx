@@ -12,8 +12,7 @@ function Index() {
               Enter your symptoms and let our intelligent system predict
               possible diseases.
             </div>
-            <ButtonLink data={{ name: "Get Started", link: "/chat" }} />
-            {/* <ButtonLink data={{ name: "Get Started", link: "/login" }} /> */}
+            <ButtonLink data={{ name: "Get Started", link: "/login" }} />
           </div>
 
           <div className="landing-orbit">

@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon, faUser } from "@fortawesome/free-solid-svg-icons";
+import { useAuth } from "../../context/AuthContext";
 
-function Header({mainRef}) {
+
+function Header({ mainRef }) {
+  const { logout } = useAuth();
+
   function handletoggleTheme() {
     mainRef.current.classList.toggle("dark-mode");
   }
+  const handleLogout = () => {
+    logout();
+    window.location.href = "/login";
+  };
   return (
     <>
       <div className="chat-header d-flex justify-content-between align-items-center">
@@ -41,7 +49,7 @@ function Header({mainRef}) {
                 <hr className="dropdown-divider" />
               </li>
               <li>
-                <a className="dropdown-item" href="#">
+                <a className="dropdown-item" href="#" onClick={handleLogout}>
                   Logout
                 </a>
               </li>

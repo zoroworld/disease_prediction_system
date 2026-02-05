@@ -14,14 +14,15 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
 
   const [form, setForm] = useState({
-    email: "",
+    username: "",
     password: "",
   });
 
-  const handleChange = (e) =>
+  function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
+  }
 
-  const handleSubmit = async (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
     setError("");
     setLoading(true);
@@ -56,11 +57,11 @@ export default function Login() {
 
         <form onSubmit={handleSubmit} className="auth-form">
 
-          {/* Email */}
+          {/* Username */}
           <AuthInput
-            type="email"
-            name="email"
-            placeholder="Email"
+            type="text"
+            name="username"
+            placeholder="Username"
             onChange={handleChange}
           />
 
