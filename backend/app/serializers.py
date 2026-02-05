@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from users.models import PatientInput, PatientResult
+from users.models import User, PatientInput, PatientResult
 
 
 class PatientInputSerializer(serializers.ModelSerializer):
@@ -28,4 +28,5 @@ class DiseasePredictionResponseSerializer(serializers.Serializer):
     normalized_symptoms = serializers.CharField()
     predictions = PredictionSerializer(many=True)
     report = serializers.JSONField(required=False)
+
 
