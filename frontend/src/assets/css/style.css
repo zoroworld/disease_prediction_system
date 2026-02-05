@@ -34,7 +34,7 @@ body {
 
 .main-landing-page {
   background: linear-gradient(135deg, #000000, #07485d),
-    url("../images/background.jpg");
+    url("/images/background.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: bottom center;
