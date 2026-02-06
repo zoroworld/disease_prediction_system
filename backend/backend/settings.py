@@ -29,7 +29,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG")
 
-ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1','disease-prediction-system-j8cl.onrender.com', 'http://localhost:5173/']
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1','disease-prediction-system-j8cl.onrender.com']
 
 # Application definition
 
