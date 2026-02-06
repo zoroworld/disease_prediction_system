@@ -4,21 +4,47 @@ import { faMoon, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../../context/AuthContext";
 
 
-function Header({ mainRef}) {
+function Header({ mainRef }) {
   const { logout } = useAuth();
-  const[name, setName] = useState('user');
+  const [name, setName] = useState('user');
 
-  function handletoggleTheme() {
-    mainRef.current.classList.toggle("dark-mode");
-  }
+  // Initialize mode from localStorage
+  const [mode, setMode] = useState(() => {
+    const saved = localStorage.getItem("theme");
+    return saved !== null ? saved : "dark-mode";
+  });
+
+  useEffect(() => {
+    if (!mainRef.current) return;
+
+    if (mode === "dark-mode") {
+      mainRef.current.classList.add("dark-mode");
+    } else {
+      mainRef.current.classList.remove("dark-mode");
+    }
+  }, [mode]);
+
+  const handleToggleTheme = () => {
+    setMode(prev => {
+      const next = prev === "dark-mode" ? "" : "dark-mode";
+      localStorage.setItem("theme", next);
+      return next;
+    });
+  };
+
+
+
   const handleLogout = () => {
     logout();
     window.location.href = "/login";
   };
-  useEffect(()=>{
+  useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user-data"))
     setName(user.username)
-  },[])
+  }, [])
+
+
+
   return (
     <>
       <div className="chat-header d-flex justify-content-between align-items-center">
@@ -27,7 +53,7 @@ function Header({ mainRef}) {
         <div className="d-flex align-items-center gap-3">
           <button
             className="btn btn-sm btn-outline-secondary"
-            onClick={handletoggleTheme}
+            onClick={handleToggleTheme}
           >
             <FontAwesomeIcon icon={faMoon} className="ms-2" />
           </button>
