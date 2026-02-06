@@ -156,26 +156,26 @@ export const ChatProvider = ({ children }) => {
 
     try {
       // 🔥 CALL BACKEND
-      // const data = await sendMessageApi(input);
-      const data = {
-        "input_symptoms": "i have feaver and vomiting",
-        "normalized_symptoms": "fever, vomiting",
-        "predictions": [
-          {
-            "disease": "typhoid",
-            "confidence": 0.15
-          },
-          {
-            "disease": "dengue",
-            "confidence": 0.14
-          }
-        ],
-        "report": "```json\n{\n    \"overview\": \"The patient reports experiencing fever and vomiting.\",\n    \"description\": \"Fever, an elevated body temperature, is a common non-specific symptom often indicating an underlying infection or inflammatory process. Vomiting, the forceful expulsion of stomach contents, can be triggered by various factors including gastrointestinal infections, food poisoning, or systemic illnesses.\",\n    \"predictions\": [\n        {\n            \"disease\": \"typhoid\",\n            \"confidence\": 0.15,\n            \"recommendation\": \"Consult a doctor for diagnostic tests such as blood culture or Widal test, and appropriate antibiotic treatment if confirmed.\"\n        },\n        {\n            \"disease\": \"dengue\",\n            \"confidence\": 0.14,\n            \"recommendation\": \"Seek medical attention for diagnosis (e.g., NS1 antigen test, PCR) and supportive care, including fluid management and monitoring for warning signs.\"\n        }\n    ],\n    \"recommended_steps\": \"Given the presence of fever and vomiting, it is highly recommended to consult a healthcare professional promptly for a thorough evaluation, accurate diagnosis, and appropriate treatment plan. Stay hydrated by drinking plenty of fluids and avoid self-medication until a doctor's advice is received.\"\n}\n```"
-      }
-      console.log(data)
+      const data = await sendMessageApi(input);
+      // const data = {
+      //   "input_symptoms": "i have feaver and vomiting",
+      //   "normalized_symptoms": "fever, vomiting",
+      //   "predictions": [
+      //     {
+      //       "disease": "typhoid",
+      //       "confidence": 0.15
+      //     },
+      //     {
+      //       "disease": "dengue",
+      //       "confidence": 0.14
+      //     }
+      //   ],
+      //   "report": "```json\n{\n    \"overview\": \"The patient reports experiencing fever and vomiting.\",\n    \"description\": \"Fever, an elevated body temperature, is a common non-specific symptom often indicating an underlying infection or inflammatory process. Vomiting, the forceful expulsion of stomach contents, can be triggered by various factors including gastrointestinal infections, food poisoning, or systemic illnesses.\",\n    \"predictions\": [\n        {\n            \"disease\": \"typhoid\",\n            \"confidence\": 0.15,\n            \"recommendation\": \"Consult a doctor for diagnostic tests such as blood culture or Widal test, and appropriate antibiotic treatment if confirmed.\"\n        },\n        {\n            \"disease\": \"dengue\",\n            \"confidence\": 0.14,\n            \"recommendation\": \"Seek medical attention for diagnosis (e.g., NS1 antigen test, PCR) and supportive care, including fluid management and monitoring for warning signs.\"\n        }\n    ],\n    \"recommended_steps\": \"Given the presence of fever and vomiting, it is highly recommended to consult a healthcare professional promptly for a thorough evaluation, accurate diagnosis, and appropriate treatment plan. Stay hydrated by drinking plenty of fluids and avoid self-medication until a doctor's advice is received.\"\n}\n```"
+      // }
+      // console.log(data.data.report)
 
       // AI MESSAGE
-      const medicalReport = parseMedicalReport(data.report);
+      const medicalReport = parseMedicalReport(data.data.report);
 
       const aiMessage = medicalReport
         ? {
