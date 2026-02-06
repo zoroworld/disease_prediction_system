@@ -61,21 +61,9 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("refresh");
   };
 
-  //for user id
-  // for user by id
-  const getUserById = async () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-
-    if (!user) {
-      throw new Error("User not authenticated");
-    }
-
-    const res = await apigetUserById(user);
-    return res; // not res.data if API already returns data
-  };
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout, getUserById }}>
+    <AuthContext.Provider value={{ user, login, signup, logout }}>
       {children}
     </AuthContext.Provider>
   );

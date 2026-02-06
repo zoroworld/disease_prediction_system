@@ -42,6 +42,8 @@ export async function login(userData) {
     const res = await base.post("/login/", userData);
     // Set tokens
     setAccessToken(res.data.access);              // in-memory
+    const user = await getUserById(res.data.user_id)
+    localStorage.setItem("user-data", JSON.stringify(user.data))
     localStorage.setItem("refresh", res.data.refresh); // long-lived
     const data = res.data
     return { success: true, data };

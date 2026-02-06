@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../../context/AuthContext";
 
 
-function Header({ mainRef, userData }) {
+function Header({ mainRef}) {
   const { logout } = useAuth();
+  const[name, setName] = useState('user');
 
   function handletoggleTheme() {
     mainRef.current.classList.toggle("dark-mode");
@@ -14,6 +15,10 @@ function Header({ mainRef, userData }) {
     logout();
     window.location.href = "/login";
   };
+  useEffect(()=>{
+    const user = JSON.parse(localStorage.getItem("user-data"))
+    setName(user.username)
+  },[])
   return (
     <>
       <div className="chat-header d-flex justify-content-between align-items-center">
@@ -32,7 +37,7 @@ function Header({ mainRef, userData }) {
               className="btn btn-sm btn-outline-secondary dropdown-toggle"
               data-bs-toggle="dropdown"
             >
-              {userData?.data?.username}
+              {name}
               <FontAwesomeIcon icon={faUser} className="ms-2" />
             </button>
             <ul className="dropdown-menu dropdown-menu-end">

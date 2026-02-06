@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../../context/AuthContext";
 import Header from "./Header";
 import Footer from "./Footer";
 import Sidebar from "./Sidebar";
@@ -9,20 +8,6 @@ import { ChatProvider } from "../../context/ChatContext";
 
 function Base({ children }) {
   const mainRef = useRef(null);
-  const [userData, setUserData] = useState(null);
-  const { getUserById } = useAuth();
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const res = await getUserById();
-        setUserData(res);
-      } catch (error) {
-        console.error("Failed to fetch user:", error);
-      }
-    };
-
-    fetchUser();
-  }, []);
 
   return (
     <>
@@ -35,7 +20,7 @@ function Base({ children }) {
                   <Sidebar />
                 </div>
                 <div className="col-md-10">
-                  <Header mainRef={mainRef} userData={userData}/>
+                  <Header mainRef={mainRef}/>
                   <div className="chat-content">
                     {children}
                     <Footer />

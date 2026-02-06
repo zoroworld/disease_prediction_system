@@ -84,9 +84,7 @@ const Chat = () => {
 
                       <MedicalReport report={item.message} />
 
-                      <p className="disclaimer">
-                        ⚠️ This is not a final diagnosis. Please consult a qualified doctor.
-                      </p>
+                      
                     </>
                   )}
                 </div>
