@@ -1,12 +1,21 @@
 services:
   frontend:
     build:
-      context: .
+      context: .           # ✅ current folder
+      dockerfile: Dockerfile
+      target: ${DOCKER_TARGET:-dev}
       args:
-        VITE_REACT_APP_DEV: "${VITE_REACT_APP_DEV}"      # Pass dev/prod flag to Dockerfile
-      target: ${DOCKER_TARGET}   # Choose stage: dev or prod
-    volumes:
-      - .:/app
-      - /app/node_modules
+        VITE_REACT_APP_DEV: ${VITE_REACT_APP_DEV}
+    
+    environment:
+      - VITE_API_KEY=${VITE_API_KEY}
+
     ports:
-      - "${FRONTEND_PORT}:${CONTAINER_PORT}"
+      - "${CONTAINER_PORT}:${CONTAINER_PORT}"
+
+    volumes:
+      - ./src:/app/src
+      - ./public:/app/public
+      - ./package.json:/app/package.json
+      - ./vite.config.js:/app/vite.config.js
+      - /app/node_modules

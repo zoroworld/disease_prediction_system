@@ -87,6 +87,27 @@ export const ChatProvider = ({ children }) => {
     );
   };
 
+
+  // =============================
+  // parse medical report
+  // =============================
+
+  const parseMedicalReport = (reportString) => {
+    if (!reportString) return null;
+
+    try {
+      const clean = reportString
+        .replace(/```json|```/g, "")
+        .trim();
+
+      return JSON.parse(clean);
+    } catch (err) {
+      console.error("Invalid report JSON", err);
+      return null;
+    }
+  };
+
+
   // =============================
   // DELETE CHAT
   // =============================
@@ -154,14 +175,24 @@ export const ChatProvider = ({ children }) => {
       console.log(data)
 
       // AI MESSAGE
-      const aiMessage = {
-        id: id + 1,
-        role: "ai",
-        icon: <FontAwesomeIcon icon={faRobot} />,
-        message: {
-          msg: data.result || "No prediction found",
-        },
-      };
+      const medicalReport = parseMedicalReport(data.report);
+
+      const aiMessage = medicalReport
+        ? {
+          id: id + 1,
+          role: "ai",
+          type: "medical_report",
+          icon: <FontAwesomeIcon icon={faRobot} />,
+          message: medicalReport,
+        }
+        : {
+          id: id + 1,
+          role: "ai",
+          type: "text",
+          icon: <FontAwesomeIcon icon={faRobot} />,
+          message: { msg: "No prediction found" },
+        };
+
 
       updateMessages(aiMessage);
       updateConversationStatus("completed");

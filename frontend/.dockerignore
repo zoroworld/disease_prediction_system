@@ -1,4 +1,33 @@
+# Node
 node_modules
+npm-debug.log
+yarn.lock
+pnpm-lock.yaml
+
+# Build output
+build
 dist
+
+# Vite / Next cache
+.vite
+.next
+.cache
+
+# Git
+.git
+.gitignore
+
+# Docker
 Dockerfile
-.dockerignore
+docker-compose.yml
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Env
+.env
+.env.local

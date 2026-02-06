@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { ChatContext } from "../context/ChatContext";
+import MedicalReport from "../component/MedicalReport";
 
 
 import Typewriter from "typewriter-effect";
@@ -40,11 +41,8 @@ const Chat = () => {
       ) : (
         <div className="chat-body">
           {messages.map((item) => {
-            const text =
-              typeof item.message === "string"
-                ? item.message
-                : item.message?.msg;
-
+            const isText = item.type === "text";
+            const isMedical = item.type === "medical_report";
             const isAI = item.role === "ai";
 
             const hasTyped = typedMessagesRef.current.has(item.id);
@@ -66,20 +64,30 @@ const Chat = () => {
                       }}
                       onInit={(typewriter) => {
                         typewriter
-                          .typeString(text)
+                          .typeString(item.message.msg)
                           .callFunction(() => {
-                            // mark message as typed
                             typedMessagesRef.current.add(item.id);
-                            // scroll to bottom
-                            bottomRef.current?.scrollIntoView({
-                              behavior: "smooth",
-                            });
+                            bottomRef.current?.scrollIntoView({ behavior: "smooth" });
                           })
                           .start();
                       }}
                     />
                   ) : (
-                    text
+                    item.message.msg
+                  )}
+                  {isMedical && (
+                    <>
+                      <p>
+                        Based on the symptoms you described, here is a preliminary medical
+                        assessment:
+                      </p>
+
+                      <MedicalReport report={item.message} />
+
+                      <p className="disclaimer">
+                        ⚠️ This is not a final diagnosis. Please consult a qualified doctor.
+                      </p>
+                    </>
                   )}
                 </div>
               </div>
