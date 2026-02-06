@@ -620,13 +620,32 @@ main.dark-mode ::-webkit-scrollbar-thumb {
 }
 
 .chat-initil-card {
-  background: #00000005;
+  background: #00000000;
   padding: 40px 30px;
   border-radius: 20px;
   /* box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2); */
   text-align: center;
   max-width: 500px;
   animation: fadeIn 0.6s ease;
+}
+
+main.dark-mode .chat-initil-card {
+  background: #00000005;
+}
+.chat-container .dropdown-item:focus,
+.chat-container .dropdown-item:hover {
+  color: #252424;
+  background-color: #fcfcfc;
+}
+
+main.dark-mode .chat-container .dropdown-item:focus,
+main.dark-mode .chat-container .dropdown-item:hover {
+  color: #ffffff;
+  background-color: #032c19;
+}
+main.dark-mode .chat-container .dropdown-menu.show{
+  background-color: #032c19;
+  color: #fff;
 }
 
 .docter-bot-icon {
@@ -638,9 +657,12 @@ main.dark-mode ::-webkit-scrollbar-thumb {
 
 .chat-initil-card .description p {
   font-size: 1.1rem;
-  color: #ffffffa1;
+  color: #333333;
   line-height: 1.6;
+}
 
+main.dark-mode .description p {
+  color: #ffffffa1;
 }
 
 /* Optional animations */
@@ -669,6 +691,21 @@ main.dark-mode ::-webkit-scrollbar-thumb {
 }
 
 
+@keyframes bgFloat {
+  0% {
+    background-position: bottom center;
+  }
+
+  50% {
+    background-position: center center;
+  }
+
+  100% {
+    background-position: bottom center;
+  }
+}
+
+
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -685,18 +722,15 @@ main.dark-mode ::-webkit-scrollbar-thumb {
     align-items: center;
     text-align: center;
   }
-}
 
-@keyframes bgFloat {
-  0% {
-    background-position: bottom center;
+  .chat-content {
+    max-width: 100%;
   }
 
-  50% {
-    background-position: center center;
-  }
+  .chat-initil-card {
 
-  100% {
-    background-position: bottom center;
+    padding: 15px 15px;
+    max-width: 100%;
+
   }
 }

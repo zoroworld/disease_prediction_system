@@ -67,19 +67,19 @@ function Header({ mainRef }) {
               <FontAwesomeIcon icon={faUser} className="ms-2" />
             </button>
             <ul className="dropdown-menu dropdown-menu-end">
-              <li>
+              {/* <li>
                 <a className="dropdown-item" href="#">
                   Login
                 </a>
               </li>
               <li>
                 <a className="dropdown-item" href="#">
-                  Register
+                  setting
                 </a>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <hr className="dropdown-divider" />
-              </li>
+              </li> */}
               <li>
                 <a className="dropdown-item" href="#" onClick={handleLogout}>
                   Logout
