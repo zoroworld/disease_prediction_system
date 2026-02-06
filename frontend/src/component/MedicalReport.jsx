@@ -1,36 +1,48 @@
+import React from "react";
+import Typewriter from "typewriter-effect";
+
 const MedicalReport = ({ report }) => {
-    return (
-      <article className="medical-report">
-        <section>
-          <h4>🩺 Overview</h4>
-          <p>{report.overview}</p>
-        </section>
-  
-        <section>
-          <h4>📋 Description</h4>
-          <p>{report.description}</p>
-        </section>
-  
-        <section>
-          <h4>🧪 Possible Conditions</h4>
-          <ul>
-            {report.predictions.map((p, i) => (
-              <li key={i}>
-                <strong>{p.disease}</strong>{" "}
-                <span>({Math.round(p.confidence * 100)}%)</span>
-                <p>{p.recommendation}</p>
-              </li>
-            ))}
-          </ul>
-        </section>
-  
-        <section>
-          <h4>✅ Recommended Steps</h4>
-          <p>{report.recommended_steps}</p>
-        </section>
-      </article>
-    );
-  };
-  
-  export default MedicalReport;
-  
+  if (!report) return null;
+
+  // Flatten report into a string for Typewriter
+  const reportString = `
+🩺 Overview
+${report.overview}
+
+📋 Description
+${report.description}
+
+🧪 Possible Conditions
+${report.predictions
+    .map(
+      (p) =>
+        `- ${p.disease} (${Math.round(p.confidence * 100)}%)
+Recommendation: ${p.recommendation}`
+    )
+    .join("\n")}
+
+✅ Recommended Steps
+${report.recommended_steps}
+
+⚠️ Disclaimer
+This is not a final diagnosis. Please consult a qualified doctor.
+`;
+
+  return (
+    <article className="medical-report">
+      <Typewriter
+        options={{
+          delay: 20,
+          cursor: "|",
+        }}
+        onInit={(typewriter) => {
+          typewriter
+            .typeString(reportString.replace(/\n/g, "<br/>"))
+            .start();
+        }}
+      />
+    </article>
+  );
+};
+
+export default MedicalReport;
