@@ -632,20 +632,50 @@ main.dark-mode ::-webkit-scrollbar-thumb {
 main.dark-mode .chat-initil-card {
   background: #00000005;
 }
+
 .chat-container .dropdown-item:focus,
 .chat-container .dropdown-item:hover {
-  color: #252424;
-  background-color: #fcfcfc;
+  color: #ffffff;
+  background-color: #00000087;
 }
 
 main.dark-mode .chat-container .dropdown-item:focus,
 main.dark-mode .chat-container .dropdown-item:hover {
   color: #ffffff;
-  background-color: #032c19;
+  background-color: #084c2d;
 }
-main.dark-mode .chat-container .dropdown-menu.show{
-  background-color: #032c19;
+
+.chat-container .dropdown-menu.show {
+  background-color: transparent;
+  border: 0;
+}
+
+main.dark-mode .chat-container .dropdown-menu.show {
+
   color: #fff;
+}
+
+.chat-container .dropdown-divider {
+  height: 0;
+  /* margin: var(--bs-dropdown-divider-margin-y) 0; */
+  overflow: hidden;
+  border-top: 1px solid #002515;
+  opacity: 1;
+  margin: 1px 0;
+}
+
+main.dark-mode .chat-container .dropdown-divider {
+  border-top: 3px solid #002515;
+}
+
+.chat-container .dropdown-item {
+  color: #ffffff;
+  background-color: #198754;
+}
+
+main.dark-mode .chat-container .dropdown-item {
+  color: #ffffff;
+  background-color: #198754;
 }
 
 .docter-bot-icon {
