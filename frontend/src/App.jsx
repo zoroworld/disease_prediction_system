@@ -11,6 +11,7 @@ import Contact from "./pages/Contact";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Users from "./pages/Users";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/users" element={<Users />} />
         <Route path="/signup" element={<Signup />} />
         <Route
           path="/chat"
