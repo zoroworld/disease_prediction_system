@@ -28,31 +28,25 @@ body {
   padding: 0;
   box-sizing: border-box;
   overflow: hidden;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
-}
-
-.main-landing-page {
-  background: linear-gradient(135deg, #000000, #07485d),
-    url("/images/background.jpg");
+  background: linear-gradient(135deg, #000000, #07485d) , url("/images/background.jpg");
+  background-blend-mode: difference;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: bottom center;
-  background-blend-mode: difference;
-  height: 100vh;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
   animation: bgFloat 18s ease-in-out infinite;
+}
+
+.main-landing-page {
+  
+  height: 100vh;
 }
 
 
 
 main {
-  background: var(--light-bg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: bottom center;
-  background-blend-mode: normal;
   color: #111;
-  animation: bgFloat 18s ease-in-out infinite;
 }
 
 .landing-container {
