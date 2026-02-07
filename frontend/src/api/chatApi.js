@@ -9,7 +9,5 @@ import base from "./base"
 
 // POST send message
 export const sendMessage = (data) => {
-  return base.post("/predict-disease/", {
-    input: data,
-  })
+  return base.post("/predict-disease/", data)
 }

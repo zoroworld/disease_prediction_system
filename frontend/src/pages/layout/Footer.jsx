@@ -45,7 +45,7 @@ function Footer() {
                 : "Enter symptoms..."
             }
             onChange={handleInputMessage}
-            onKeyDown={handleInputEnter} // use KeyDown for Enter
+            onKeyDown={handleInputEnter}
           />
           <button
             className="btn btn-primary"

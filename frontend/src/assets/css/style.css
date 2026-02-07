@@ -427,6 +427,8 @@ main.dark-mode .form-control::placeholder {
   margin: 0 auto;
   max-width: 80%;
   /* justify-content: center; */
+  position: relative;
+  height: calc(100% - 75px);
 }
 
 /* SEND BUTTON */
