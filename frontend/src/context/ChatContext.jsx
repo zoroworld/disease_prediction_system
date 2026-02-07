@@ -8,6 +8,8 @@ export const ChatProvider = ({ children }) => {
   const [input, setInput] = useState("");
   // const [chatStatus, setChatStatus] = useState("ready");
   const [hasSearched, setHasSearched] = useState(false);
+  const user = JSON.parse(localStorage.getItem("user"))
+
 
 
   const [showPredictionModal, setShowPredictionModal] = useState(false);
@@ -135,6 +137,7 @@ export const ChatProvider = ({ children }) => {
     if (!input.trim()) return;
     if (chatStatus === "completed") return;
     if (!activeConversationId) return;
+    if (!user) return;
 
     const id = Date.now();
 
@@ -156,7 +159,13 @@ export const ChatProvider = ({ children }) => {
 
     try {
       // 🔥 CALL BACKEND
-      const data = await sendMessageApi(input);
+     
+      const input_data = {
+        symptoms:input,
+        user_id:user
+      }
+      
+      const data = await sendMessageApi(input_data);
       // const data = {
       //   "input_symptoms": "i have feaver and vomiting",
       //   "normalized_symptoms": "fever, vomiting",

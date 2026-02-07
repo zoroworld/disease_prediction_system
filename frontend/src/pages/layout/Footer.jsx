@@ -4,8 +4,7 @@ import { faPaperPlane, faExclamationTriangle } from "@fortawesome/free-solid-svg
 import { useChat } from "../../context/ChatContext";
 
 function Footer() {
-  const { input, setInput, sendMessage, activeConversationId, chatStatus } =
-    useChat();
+  const { input, setInput, sendMessage, activeConversationId, chatStatus } = useChat();
   const isDisabled = !activeConversationId || chatStatus !== "ready";
 
   // Handle typing
