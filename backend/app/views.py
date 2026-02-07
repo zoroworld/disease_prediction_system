@@ -30,10 +30,16 @@ def index(request):
 
 class DiseasePredictionAPIView(APIView):
     def post(self, request):
+
         # 1️⃣ Validate input
         serializer = DiseasePredictionRequestSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        raw_symptoms = serializer.validated_data.get("symptoms")
+
+        if serializer.is_valid():
+            raw_symptoms = serializer.validated_data["symptoms"]
+            user_id = serializer.validated_data["user_id"]
+        else:
+            return Response(serializer.errors, status=400)
 
         # 2️⃣ Normalize symptoms
         try:
@@ -57,9 +63,12 @@ class DiseasePredictionAPIView(APIView):
         try:
             report = generate_medical_report(raw_symptoms, predictions, normalized_symptoms)
         except Exception as e:
-            report = None  # optional, do not block response
+            return Response(
+                {"error": f"Symptom report failed: {str(e)}"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
-        user = User.objects.get(id=2)
+        user = User.objects.get(id=user_id)
         # 5️⃣ Save input to DB
         patient_input = PatientInput.objects.create(
             user=user,

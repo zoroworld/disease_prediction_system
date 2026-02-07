@@ -6,7 +6,8 @@ services:
     env_file:
       - .env
     environment:
-      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      GEMINI_API_KEY_1: ${GEMINI_API_KEY_1}
+      GEMINI_API_KEY_2: ${GEMINI_API_KEY_2}
       PYTHONPATH: /app
     ports:
       - "8000:8000"

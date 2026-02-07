@@ -3,9 +3,12 @@ from typing import TypedDict
 from dotenv import load_dotenv
 from langgraph.graph import StateGraph, END
 from langchain_google_genai import ChatGoogleGenerativeAI
+
+
 import os
 
 load_dotenv()
+
 
 
 _llm = None
@@ -16,7 +19,7 @@ def get_llm():
     if _llm is None:
         _llm =ChatGoogleGenerativeAI(
                     model="gemini-2.5-flash",
-                    google_api_key=os.getenv("GEMINI_API_KEY")
+                    google_api_key=os.getenv("GEMINI_API_KEY_1")
                 )
     return _llm
 
@@ -65,5 +68,5 @@ def normalized_output(text: str) -> str:
     return app.invoke({"input_text": text})["normalized_symptoms"]
 
 
-# data = normalized_output("fever headache body pain")
-# print(data)
+data = normalized_output("fever headache body pain")
+print(data)

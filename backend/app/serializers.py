@@ -16,8 +16,12 @@ class PatientResultSerializer(serializers.ModelSerializer):
 class DiseasePredictionRequestSerializer(serializers.Serializer):
     symptoms = serializers.CharField(
         max_length=500,
+        allow_blank=False,
+        trim_whitespace=True,
         help_text="Enter symptoms in natural language"
     )
+    user_id = serializers.IntegerField(min_value=1)
+
 
 class PredictionSerializer(serializers.Serializer):
     disease = serializers.CharField()
