@@ -18,7 +18,7 @@ const Chat = () => {
   // Auto scroll on new messages
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages.length]);
+  }, [messages]);
 
 
 
@@ -57,21 +57,24 @@ const Chat = () => {
                 <div className="content">
                   {showTypewriter ? (
                     <Typewriter
-                      options={{
-                        cursor: "|",
-                        delay: 35,
-                        deleteSpeed: Infinity, // never delete
-                      }}
+                      options={{ cursor: "|", delay: 35, deleteSpeed: Infinity }}
                       onInit={(typewriter) => {
+                        // Scroll continuously while typing
+                        const interval = setInterval(() => {
+                          bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+                        }, 10);
+
                         typewriter
                           .typeString(item.message.msg)
                           .callFunction(() => {
                             typedMessagesRef.current.add(item.id);
-                            bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+                            clearInterval(interval); // stop continuous scroll
+                            bottomRef.current?.scrollIntoView({ behavior: "smooth" }); // final scroll
                           })
                           .start();
                       }}
                     />
+
                   ) : (
                     item.message.msg
                   )}
@@ -82,9 +85,12 @@ const Chat = () => {
                         assessment:
                       </p>
 
-                      <MedicalReport report={item.message} />
-
-                      
+                      <MedicalReport
+                        report={item.message}
+                        onComplete={() =>
+                          bottomRef.current?.scrollIntoView({ behavior: "smooth" })
+                        }
+                      />
                     </>
                   )}
                 </div>
