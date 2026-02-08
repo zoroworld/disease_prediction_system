@@ -5,7 +5,7 @@
 
 ## 📌 Overview
 
-The **Disease Prediction System** is a backend-driven application that accepts patient symptoms, predicts possible diseases using a machine learning model, and generates a **structured medical report** in JSON format.
+The **Disease Prediction System** is a backend-driven application that accepts patient symptoms, predicts possible diseases using a machine learning model, and generates a **structured medical report** in JSON format By backend.
 
 The system is built using **Django + Django REST Framework**, integrates an ML inference layer, and stores prediction results in **PostgreSQL using JSONField** for flexibility and extensibility.
 
