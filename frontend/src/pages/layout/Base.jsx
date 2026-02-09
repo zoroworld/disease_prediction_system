@@ -19,7 +19,7 @@ function Base({ children }) {
                 <div className="col-md-2">
                   <Sidebar />
                 </div>
-                <div className="col-md-10">
+                <div className="col-md-10 h-100">
                   <Header mainRef={mainRef}/>
                   <div className="chat-content">
                     {children}

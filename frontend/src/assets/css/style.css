@@ -28,7 +28,8 @@ body {
   padding: 0;
   box-sizing: border-box;
   overflow: hidden;
-  background: linear-gradient(135deg, #000000, #07485d) , url("/images/background.jpg");
+  height: 100vh;
+  background: linear-gradient(135deg, #000000, #07485d), url("/images/background.jpg");
   background-blend-mode: difference;
   background-repeat: no-repeat;
   background-size: cover;
@@ -39,7 +40,7 @@ body {
 }
 
 .main-landing-page {
-  
+
   height: 100vh;
 }
 
@@ -319,7 +320,7 @@ main.dark-mode .chat-header {
   overflow-y: auto;
   background: transparent;
   height: 100%;
-  max-height: 580px;
+  max-height: 800px;
 }
 
 main.dark-mode .chat-body {
@@ -334,17 +335,19 @@ main.dark-mode .chat-body {
 }
 
 .message .content {
-  max-width: 75%;
+  max-width: 100%;
   padding: 12px 16px;
   border-radius: 10px;
   line-height: 1.6;
-  font-size: 0.95rem;
+  font-size: 17px;
+  display: block;
 }
 
 /* HUMAN */
 .user .content {
   background: var(--accent);
   color: #000;
+  width: 100%;
 }
 
 /* AI */
@@ -362,6 +365,11 @@ main.dark-mode .ai .content {
 .chat-footer {
   padding: 14px 16px;
   background: transparent;
+  width: 100%;
+  margin: 0 auto;
+  max-width: 96%;
+  margin-right: 28px;
+  margin-left: 28px;
 }
 
 main.dark-mode .chat-footer {
@@ -419,8 +427,8 @@ main.dark-mode .form-control::placeholder {
   flex-direction: column;
   width: 100%;
   margin: 0 auto;
-  max-width: 80%;
-  /* justify-content: center; */
+  max-width: 75%;
+  justify-content: center;
   position: relative;
   height: calc(100% - 75px);
 }
@@ -617,7 +625,7 @@ main.dark-mode ::-webkit-scrollbar-thumb {
 
 .chat-initil-card {
   background: #00000000;
-  padding: 40px 30px;
+  padding: 0;
   border-radius: 20px;
   /* box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2); */
   text-align: center;
