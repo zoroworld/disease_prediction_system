@@ -11,7 +11,7 @@ function Base({ children }) {
 
   return (
     <>
-      <main className="dark-mode h-100" ref={mainRef} id="main">
+      <main className="main-chat-container dark-mode h-100" ref={mainRef} id="main">
         <ChatProvider>
           <div className="chat-container h-100">
             <div className="container-fluid h-100">

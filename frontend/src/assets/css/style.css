@@ -33,7 +33,18 @@ body {
   animation: bgFloat 18s ease-in-out infinite;
 }
 
-main {
+.main-landing-page-container{
+  background: var(--dark-bg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom center;
+  background-blend-mode: difference;
+  animation: bgFloat 18s ease-in-out infinite;
+  height: 100%;
+}
+
+
+.main-chat-container {
   background: var(--light-bg);
   background-blend-mode: hard-light;
   background-repeat: no-repeat;
@@ -43,7 +54,7 @@ main {
 }
 
 /* DARK MODE */
-main.dark-mode {
+.main-chat-container.dark-mode {
   background: var(--dark-bg);
   background-repeat: no-repeat;
   background-size: cover;

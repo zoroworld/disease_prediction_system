@@ -10,7 +10,7 @@ import symptom5 from '../assets/images/symptom_5.png';
 function Index() {
   return (
     <>
-      <main className="main-landing-page">
+      <main className="main-landing-page-container">
         <div className="landing-container">
           <div className="landing-text">
             <div className="landing-title">Disease Prediction System</div>
