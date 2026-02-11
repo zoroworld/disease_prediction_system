@@ -4,8 +4,7 @@
   --accent: #19c37d;
 
   /* LIGHT MODE */
-  --light-bg: linear-gradient(135deg, #ffffffb8, #ffffff),
-    url("../images/background.jpg");
+  --light-bg: linear-gradient(135deg, #ffffffc2, #f8f9ffe6), url(../images/background.jpg);
   --light-panel: #ffffff;
   --light-input: #ffffff;
   --light-border: #ddd;
@@ -34,20 +33,26 @@ body {
   animation: bgFloat 18s ease-in-out infinite;
 }
 
-.main-landing-page {
-  background: linear-gradient(135deg, #000000, #07485d), url("/images/background.jpg");
-  background-blend-mode: difference;
+main {
+  background: var(--light-bg);
+  background-blend-mode: hard-light;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: bottom center;
-  height: 100%;
+  animation: bgFloat 18s ease-in-out infinite;
 }
 
-
-
-main {
-  color: #111;
+/* DARK MODE */
+main.dark-mode {
+  background: var(--dark-bg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom center;
+  background-blend-mode: difference;
+  color: #fff;
+  animation: bgFloat 18s ease-in-out infinite;
 }
+
 
 .landing-container {
   display: flex;
@@ -226,16 +231,7 @@ main {
 
 /* -------------------------------------for chat style------------------------------------------- */
 
-/* DARK MODE */
-main.dark-mode {
-  background: var(--dark-bg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: bottom center;
-  background-blend-mode: difference;
-  color: #fff;
-  animation: bgFloat 18s ease-in-out infinite;
-}
+
 
 /* LAYOUT */
 .chat-container {
