@@ -123,7 +123,7 @@ The application follows a containerized microservice-based architecture where th
 | Component        | Technology Used        | Deployment Platform |
 |------------------|------------------------|---------------------|
 | Frontend         | React.js               | Render              |
-| Backend          | Spring Boot / Node.js  | Render              |
+| Backend          | Django Rest Framework  | vercel              |
 | Database         | PostgreSQL             | Neon (Serverless)   |
 | Containerization | Docker                 | Used for both FE & BE |
 
