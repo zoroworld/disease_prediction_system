@@ -33,7 +33,7 @@ body {
   animation: bgFloat 18s ease-in-out infinite;
 }
 
-.main-landing-page-container{
+.main-landing-page-container {
   background: var(--dark-bg);
   background-repeat: no-repeat;
   background-size: cover;
@@ -772,5 +772,16 @@ main.dark-mode .description p {
     padding: 15px 15px;
     max-width: 100%;
 
+  }
+
+  .chat-content {
+    height: fit-content;
+  }
+
+  .chat-footer {
+    padding: 14px 14px;
+    max-width: 100%;
+    margin-right: 0;
+    margin-left: 0;
   }
 }
